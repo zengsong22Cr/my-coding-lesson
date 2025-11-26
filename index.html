@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sunshine Always</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, #fff5e6 0%, #ffe8cc 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Comic Sans MS', 'Chalkboard SE', 'Comic Neue', cursive;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* 气泡装饰元素 */
+        .bubble {
+            position: absolute;
+            background: radial-gradient(circle at 30% 30%, rgba(255, 200, 87, 0.3), rgba(255, 165, 0, 0.1));
+            border: 2px solid rgba(255, 165, 0, 0.2);
+            border-radius: 50%;
+            animation: float 6s infinite ease-in-out;
+        }
+
+        .bubble::before {
+            content: '';
+            position: absolute;
+            width: 20%;
+            height: 20%;
+            background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.8));
+            border-radius: 50%;
+            top: 10%;
+            left: 10%;
+            filter: blur(1px);
+        }
+
+        .bubble1 {
+            width: 80px;
+            height: 80px;
+            top: 10%;
+            left: 15%;
+            animation-duration: 6s;
+            animation-delay: 0s;
+        }
+
+        .bubble2 {
+            width: 60px;
+            height: 60px;
+            top: 30%;
+            right: 10%;
+            animation-duration: 7s;
+            animation-delay: 1s;
+        }
+
+        .bubble3 {
+            width: 50px;
+            height: 50px;
+            bottom: 20%;
+            left: 20%;
+            animation-duration: 8s;
+            animation-delay: 2s;
+        }
+
+        .bubble4 {
+            width: 70px;
+            height: 70px;
+            top: 50%;
+            right: 15%;
+            animation-duration: 9s;
+            animation-delay: 0.5s;
+        }
+
+        .bubble5 {
+            width: 45px;
+            height: 45px;
+            bottom: 15%;
+            right: 25%;
+            animation-duration: 7.5s;
+            animation-delay: 1.5s;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px) translateX(0px);
+                opacity: 0.6;
+            }
+            50% {
+                transform: translateY(-30px) translateX(10px);
+                opacity: 0.3;
+            }
+        }
+
+        /* 太阳笑脸容器 */
+        .sun-container {
+            position: relative;
+            margin-bottom: 40px;
+            z-index: 10;
+            filter: drop-shadow(0 10px 30px rgba(255, 165, 0, 0.3));
+        }
+
+        /* 太阳圆形 */
+        .sun {
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle at 35% 35%, #ffd700, #ffa500);
+            border-radius: 50%;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 50px rgba(255, 165, 0, 0.5), inset -10px -10px 40px rgba(255, 69, 0, 0.2);
+        }
+
+        /* 太阳光芒 */
+        .sun::before {
+            content: '';
+            position: absolute;
+            width: 260px;
+            height: 260px;
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: 
+                radial-gradient(circle, rgba(255, 200, 0, 0.3) 0%, transparent 70%);
+            z-index: -1;
+        }
+
+        /* 太阳光芒针 */
+        .sun-rays {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+        }
+
+        .ray {
+            position: absolute;
+            width: 8px;
+            height: 50px;
+            background: linear-gradient(to bottom, #ffa500, transparent);
+            left: 50%;
+            top: 0;
+            transform-origin: center 150px;
+            border-radius: 4px;
+        }
+
+        .ray:nth-child(1) { transform: translateX(-4px) translateY(-30px) rotate(0deg); }
+        .ray:nth-child(2) { transform: translateX(-4px) translateY(-30px) rotate(45deg); }
+        .ray:nth-child(3) { transform: translateX(-4px) translateY(-30px) rotate(90deg); }
+        .ray:nth-child(4) { transform: translateX(-4px) translateY(-30px) rotate(135deg); }
+        .ray:nth-child(5) { transform: translateX(-4px) translateY(-30px) rotate(180deg); }
+        .ray:nth-child(6) { transform: translateX(-4px) translateY(-30px) rotate(225deg); }
+        .ray:nth-child(7) { transform: translateX(-4px) translateY(-30px) rotate(270deg); }
+        .ray:nth-child(8) { transform: translateX(-4px) translateY(-30px) rotate(315deg); }
+
+        /* 太阳脸部 */
+        .sun-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* 眼睛 */
+        .eyes {
+            display: flex;
+            gap: 50px;
+            margin-bottom: 20px;
+            z-index: 2;
+        }
+
+        .eye {
+            width: 30px;
+            height: 40px;
+            background: #333;
+            border-radius: 50%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .eye::after {
+            content: '';
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            background: white;
+            border-radius: 50%;
+            top: 8px;
+            left: 8px;
+        }
+
+        /* 嘴巴 */
+        .mouth {
+            width: 80px;
+            height: 40px;
+            border: 4px solid #333;
+            border-top: none;
+            border-radius: 0 0 80px 80px;
+            position: relative;
+            z-index: 2;
+            margin-top: 10px;
+        }
+
+        /* 腮红 */
+        .blush {
+            position: absolute;
+            width: 35px;
+            height: 25px;
+            background: radial-gradient(circle, rgba(255, 182, 193, 0.5), transparent);
+            border-radius: 50%;
+            z-index: 1;
+        }
+
+        .blush-left {
+            left: 35px;
+            top: 100px;
+        }
+
+        .blush-right {
+            right: 35px;
+            top: 100px;
+        }
+
+        /* 标题 */
+        h1 {
+            color: #ff8c00;
+            font-size: 48px;
+            font-weight: bold;
+            text-shadow: 
+                3px 3px 0px rgba(255, 255, 255, 0.8),
+                6px 6px 15px rgba(255, 165, 0, 0.3);
+            letter-spacing: 2px;
+            z-index: 10;
+            position: relative;
+            text-transform: lowercase;
+            font-style: italic;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .sun {
+                width: 150px;
+                height: 150px;
+            }
+
+            .sun-rays {
+                width: 230px;
+                height: 230px;
+            }
+
+            h1 {
+                font-size: 36px;
+            }
+
+            .eyes {
+                gap: 35px;
+            }
+
+            .eye {
+                width: 25px;
+                height: 32px;
+            }
+
+            .mouth {
+                width: 60px;
+                height: 30px;
+                border-width: 3px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 气泡装饰 -->
+    <div class="bubble bubble1"></div>
+    <div class="bubble bubble2"></div>
+    <div class="bubble bubble3"></div>
+    <div class="bubble bubble4"></div>
+    <div class="bubble bubble5"></div>
+
+    <!-- 太阳笑脸 -->
+    <div class="sun-container">
+        <div class="sun-rays">
+            <div class="ray"></div>
+            <div class="ray"></div>
+            <div class="ray"></div>
+            <div class="ray"></div>
+            <div class="ray"></div>
+            <div class="ray"></div>
+            <div class="ray"></div>
+            <div class="ray"></div>
+        </div>
+        
+        <div class="sun">
+            <div class="sun-face">
+                <div class="eyes">
+                    <div class="eye"></div>
+                    <div class="eye"></div>
+                </div>
+                <div class="mouth"></div>
+            </div>
+            <div class="blush blush-left"></div>
+            <div class="blush blush-right"></div>
+        </div>
+    </div>
+
+    <!-- 标题 -->
+    <h1>sunshine always!</h1>
+</body>
+</html>
